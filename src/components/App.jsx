@@ -66,7 +66,7 @@ export class App extends Component {
             onChange={this.handleChange}
           />
         </header>
-        {loading && <BlockLoader />}
+        {/* {loading && <BlockLoader />} */}
         <main>
           <ImageGallery filter={this.state.filter} images={imagelist} />
         </main>
