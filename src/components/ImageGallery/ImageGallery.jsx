@@ -8,6 +8,7 @@ export class ImageGallery extends Component {
   state = {
     images: [],
     loading: false,
+    error: null,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -15,32 +16,42 @@ export class ImageGallery extends Component {
     const BASE_URL = 'https://pixabay.com/api/';
 
     if (prevProps.filter !== this.props.filter) {
-      this.setState({ loading: true });
+      this.setState({ loading: true, error: null });
 
       fetch(
         `${BASE_URL}?q=${this.props.filter}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
       )
-        .then(res => res.json())
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error('Nothing was found');
+        })
+
         .then(data => {
-          this.setState({ images: data.hits }, () => {
-            this.setState({ loading: false });
-          });
+          if (data.hits.length > 0) {
+            this.setState({ images: data.hits });
+          } else {
+            throw new Error('Nothing was found');
+          }
         })
         .catch(error => {
-          console.log(error);
+          this.setState({ error });
+        })
+        .finally(() => {
           this.setState({ loading: false });
         });
     }
   }
 
   render() {
-    const { images, loading } = this.state;
-    console.log('loading state:', loading);
+    const { images, loading, error } = this.state;
 
     return (
       <ul className={styles.ImageGallery}>
+        {error && <h2>{error.message}</h2>}
         {loading && <BlocksLoader />}
-        {/* {images.length === 0 && <p>Nothing found.</p>} */}
+
         {images.map(({ id, largeImageURL, tags }) => (
           <ImageGalleryItem
             key={id}
