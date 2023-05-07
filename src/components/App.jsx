@@ -16,18 +16,9 @@ export class App extends Component {
     showModal: false,
   };
 
-  //   componentDidMount() {
-  //     this.setState({ loading: true });
-  //     fetch(
-  //    `${BASE_URL}?q=dom&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-  //     )
-  //      .then(res => res.json())
-  //      .then(imagelist => this.setState({ imagelist }))
-  //      .finally(() => this.setState({ loading: false }));
-  // }
 
   handleSearchSubmit = filter => {
-    console.log(filter);
+    // console.log(filter);
     this.setState({ filter });
   };
 

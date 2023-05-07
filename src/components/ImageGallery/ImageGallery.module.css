@@ -10,3 +10,13 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+
+.wrap {
+  display: flex;
+  justify-content: center
+}
+
+.imageError {
+  width: 300px;
+}
