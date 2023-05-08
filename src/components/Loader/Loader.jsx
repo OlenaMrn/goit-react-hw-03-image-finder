@@ -1,4 +1,5 @@
 import { Blocks } from 'react-loader-spinner';
+import PropTypes from 'prop-types';
 import styles from './Loader.module.css'
 
 export function BlocksLoader() {
@@ -15,3 +16,12 @@ export function BlocksLoader() {
     </div>
   );
 }
+
+BlocksLoader.propTypes = {
+  visible: PropTypes.bool,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  ariaLabel: PropTypes.string,
+  wrapperStyle: PropTypes.object,
+  wrapperClassName: PropTypes.string,
+};

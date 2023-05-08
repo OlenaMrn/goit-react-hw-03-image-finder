@@ -1,10 +1,8 @@
 import { Component } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Modal } from './Modal/Modal';
-
-
 
 export class App extends Component {
   state = {
@@ -13,11 +11,10 @@ export class App extends Component {
     filter: '',
     loading: false,
     showModal: false,
-    selectedImageURL: '',
+    modalImg: '',
   };
 
   handleSearchSubmit = filter => {
-    // console.log(filter);
     this.setState({ filter });
   };
 
@@ -28,12 +25,12 @@ export class App extends Component {
   toggleModal = largeImageURL => {
     this.setState(prevState => ({
       showModal: !prevState.showModal,
-      largeImageURL,
+      modalImg: largeImageURL,
     }));
   };
 
   render() {
-    const { filter, imagelist, showModal, largeImageURL } = this.state;
+    const { filter, imagelist, showModal, modalImg } = this.state;
 
     return (
       <div>
@@ -44,25 +41,16 @@ export class App extends Component {
             onChange={this.handleChange}
           />
         </header>
-        {/* {loading && <BlockLoader />} */}
         <main>
           <ImageGallery
             filter={filter}
             images={imagelist}
-            onClick={() => this.toggleModal(largeImageURL)}
+            onClick={this.toggleModal}
           />
-          {showModal && (
-            <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />
-          )}
+          {showModal && <Modal onClose={this.toggleModal} url={modalImg} />}
         </main>
         <ToastContainer />
       </div>
     );
   }
 }
-
-
-
-
-
-

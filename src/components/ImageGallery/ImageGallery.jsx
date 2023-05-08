@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { BlocksLoader } from 'components/Loader/Loader';
 import { Button } from 'components/Button/Button';
@@ -8,6 +9,11 @@ const API_KEY = '34494219-18836f66a27c5c5fdb378157c';
 const BASE_URL = 'https://pixabay.com/api/';
 
 export class ImageGallery extends Component {
+  static propTypes = {
+    filter: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+  };
+
   state = {
     images: [],
     error: null,
@@ -62,7 +68,7 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { images, status, page, totalPages, selectedImage } = this.state;
+    const { images, status, page, totalPages } = this.state;
 
     if (status === 'idle') {
       // return <div style={{ textAlign: 'center'}}>Type search word</div>;
@@ -109,3 +115,4 @@ export class ImageGallery extends Component {
     }
   }
 }
+

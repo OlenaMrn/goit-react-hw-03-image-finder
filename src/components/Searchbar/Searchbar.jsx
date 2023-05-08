@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './Searchbar.module.css';
 import { ImSearch } from 'react-icons/im';
 
 export class Searchbar extends Component {
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+
   state = {
     filter: '',
   };
@@ -14,12 +21,10 @@ export class Searchbar extends Component {
   };
 
   handleSubmit = event => {
-    
     event.preventDefault();
     if (this.state.filter.trim() === '') {
-         return toast.info('Type something for search');
-   
-    };
+      return toast.info('Type something for search');
+    }
 
     this.props.onSubmit(this.state.filter);
     this.setState({ filter: '' });
