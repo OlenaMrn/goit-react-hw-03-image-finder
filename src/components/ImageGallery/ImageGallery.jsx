@@ -62,7 +62,7 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { images, status, page, totalPages } = this.state;
+    const { images, status, page, totalPages, selectedImage } = this.state;
 
     if (status === 'idle') {
       // return <div style={{ textAlign: 'center'}}>Type search word</div>;

@@ -2,10 +2,9 @@ import { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
-import BlockLoader from './Loader/Loader';
+import { Modal } from './Modal/Modal';
 
-// const API_KEY = '34494219-18836f66a27c5c5fdb378157c';
-// const BASE_URL = 'https://pixabay.com/api/';
+
 
 export class App extends Component {
   state = {
@@ -14,8 +13,8 @@ export class App extends Component {
     filter: '',
     loading: false,
     showModal: false,
+    selectedImageURL: '',
   };
-
 
   handleSearchSubmit = filter => {
     // console.log(filter);
@@ -26,27 +25,15 @@ export class App extends Component {
     this.setState({ filter: e.target.value });
   };
 
-  // handleSubmit = e => {
-  //   e.preventDefault();
-
-  //   const { filter } = this.state;
-
-  //   this.setState({ loading: true });
-
-  //   fetch(
-  //     `${BASE_URL}?q=${filter}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-  //   )
-  //     .then(res => res.json())
-  //     .then(imagelist => this.setState({ imagelist }))
-  //     .finally(() => this.setState({ loading: false }));
-  // };
-
-  // handleChange = e => {
-  //   this.setState({ filter: e.target.value });
-  // };
+  toggleModal = largeImageURL => {
+    this.setState(prevState => ({
+      showModal: !prevState.showModal,
+      largeImageURL,
+    }));
+  };
 
   render() {
-    const { filter, imagelist, loading } = this.state;
+    const { filter, imagelist, showModal, largeImageURL } = this.state;
 
     return (
       <div>
@@ -59,7 +46,14 @@ export class App extends Component {
         </header>
         {/* {loading && <BlockLoader />} */}
         <main>
-          <ImageGallery filter={this.state.filter} images={imagelist} />
+          <ImageGallery
+            filter={filter}
+            images={imagelist}
+            onClick={() => this.toggleModal(largeImageURL)}
+          />
+          {showModal && (
+            <Modal onClose={this.toggleModal} largeImageURL={largeImageURL} />
+          )}
         </main>
         <ToastContainer />
       </div>
